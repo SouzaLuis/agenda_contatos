@@ -13,13 +13,14 @@ $u = new Usuario;
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
         body{
-	        background :#3d907d;
+            /* padding-top: 5vh; */
+            background-image: url(imagens/agenda.png);
+            background-size: 50px;
+            background-color: #81BEF7;
         }
-
         form{
             background: #FFF;
         }
-
         .form-container{
             border-radius: 10px;
             padding: 20px;
@@ -42,17 +43,16 @@ $u = new Usuario;
         border: 1px solid rgb(34,139,34);
         border-radius: 13px;
         color: #000;
-    }
-
-    div.msg-erro{
-        width: 400px;
-        margin: 10px auto;
-        padding: 10px;
-        background-color: rgba(250,128,114,.3);
-        border: 1px solid rgb(165,42,42);
-        border-radius: 13px;
-        color: #000;
-    }
+        }
+        div.msg-erro{
+            width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: rgba(250,128,114,.3);
+            border: 1px solid rgb(165,42,42);
+            border-radius: 13px;
+            color: #000;
+        }
         </style>
 </head>
 <body>
@@ -73,69 +73,68 @@ $u = new Usuario;
                     <div class="form-group"> <input type="password" class="form-control" name="confSenha" placeholder="Confirmar Senha" maxlength="15"> </div>
                     <div class="form-group"> <input type="submit" class="btn btn-primary btn-block" value="Cadastrar" /> </div>
                     <button class="btn btn-primary btn-block"><a style="text-decoration:none; color: white" href="index.php">Acessar</a></button>
-                </form>
-               
-                <?php
-                //verificar se clicou no botão
-                if(isset($_POST['nome']))
-                {
-                    $nome = addslashes($_POST['nome']);
-                    $cep = addslashes($_POST['cep']);
-                    $logradouro = addslashes($_POST['logradouro']);
-                    $numero = addslashes($_POST['numero']);
-                    $bairro = addslashes($_POST['bairro']);
-                    $cidade = addslashes($_POST['cidade']);
-                    $uf = addslashes($_POST['uf']);
-                    $telefone = addslashes($_POST['telefone']);
-                    $email = addslashes($_POST['email']);
-                    $senha = addslashes($_POST['senha']);
-                    $confirmarSenha = addslashes($_POST['confSenha']);
+                    <?php
+                        //verificar se clicou no botão
+                        if(isset($_POST['nome']))
+                        {
+                            $nome = addslashes($_POST['nome']);
+                            $cep = addslashes($_POST['cep']);
+                            $logradouro = addslashes($_POST['logradouro']);
+                            $numero = addslashes($_POST['numero']);
+                            $bairro = addslashes($_POST['bairro']);
+                            $cidade = addslashes($_POST['cidade']);
+                            $uf = addslashes($_POST['uf']);
+                            $telefone = addslashes($_POST['telefone']);
+                            $email = addslashes($_POST['email']);
+                            $senha = addslashes($_POST['senha']);
+                            $confirmarSenha = addslashes($_POST['confSenha']);
 
-                    //verificar se está vazio
-                    if(!empty($nome) && !empty($cep)  &&!empty($logradouro) && !empty($numero) && !empty($bairro) && !empty($cidade) && !empty($uf) && !empty($telefone) && !empty($email) && !empty($senha) && !empty($confirmarSenha))
-                    {
-                        $u->conectar("vexpenses","localhost","root","");
-                        if($u->msgErro == ""){
-                            if($senha == $confirmarSenha){
-                                if($u->cadastrar($nome,$email,$senha,$cep,$logradouro,$numero,$bairro,$cidade,$uf,$telefone))
-                                {
+                            //verificar se está vazio
+                            if(!empty($nome) && !empty($cep)  &&!empty($logradouro) && !empty($numero) && !empty($bairro) && !empty($cidade) && !empty($uf) && !empty($telefone) && !empty($email) && !empty($senha) && !empty($confirmarSenha))
+                            {
+                                $u->conectar("vexpenses","localhost","root","");
+                                if($u->msgErro == ""){
+                                    if($senha == $confirmarSenha){
+                                        if($u->cadastrar($nome,$email,$senha,$cep,$logradouro,$numero,$bairro,$cidade,$uf,$telefone))
+                                        {
+                                            ?>
+                                            <div id="msg-sucesso">
+                                            Cadastrado com sucesso! Acesse para acessar todas as funcionalidades
+                                            </div>
+                                        <?php
+                                        }else
+                                        {
+                                            ?>
+                                            <div class="msg-erro">
+                                            Email já cadastrado!
+                                            </div>
+                                            <?php
+                                        }
+                                    } else{
+                                        ?>
+                                        <div class="msg-erro">
+                                        Senhas não correspondem!
+                                        </div>
+                                        <?php
+                                    }            
+                                }else{
                                     ?>
-                                    <div id="msg-sucesso">
-                                    Cadastrado com sucesso! Acesse para acessar todas as funcionalidades
-                                    </div>
-                                <?php
-                                }else
-                                {
-                                    ?>
-                                    <div class="msg-erro">
-                                    Email já cadastrado!
-                                    </div>
-                                    <?php
+                                        <div class="msg-erro">
+                                        <?php echo "Erro:".$u.msgErro; ?>
+                                        </div>
+                                        <?php
                                 }
-                            } else{
+                            }else{
                                 ?>
                                 <div class="msg-erro">
-                                Senhas não correspondem!
+                                Preencha todos os campos!
                                 </div>
                                 <?php
-                            }            
-                        }else{
-                            ?>
-                                <div class="msg-erro">
-                                <?php echo "Erro:".$u.msgErro; ?>
-                                </div>
-                                <?php
+                            }
                         }
-                    }else{
-                        ?>
-                        <div class="msg-erro">
-                        Preencha todos os campos!
-                        </div>
-                        <?php
-                    }
-                }
 
-?>
+                    ?>
+                </form>
             </section>
         </div>
     </div>

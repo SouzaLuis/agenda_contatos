@@ -11,27 +11,36 @@ $u = new Usuario;
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Agenda Vexpenses - Login</title>
     <style>
-        body{
-	        background :#3d907d;
+         body{
+            padding-top: 5vh;
+            background-image: url(imagens/agenda.png);
+            background-size: 50px;
+            background-color: #81BEF7;
         }
-
-        form{
+       form{
             background: #FFF;
         }
-
         .form-container{
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0px 0px 10px 0px;
         }
         .bg{
-
             width: 60px;
             height: 60px;
             position: absolute;
             top:-35px;
             left: 40%;
             border-radius: 50%;
+        }
+        div.msg-erro{
+            width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: rgba(250,128,114,.3);
+            border: 1px solid rgb(165,42,42);
+            border-radius: 13px;
+            color: #000;
         }
     </style>
 </head>
@@ -45,7 +54,7 @@ $u = new Usuario;
 				<h2 class="text-center mt-4">Login</h2>
 
 				<div class="form-group">
-					<input type="email"  class="form-control" name="nome" placeholder="Insira aqui seu e-mail">
+					<input type="email"  class="form-control" name="email" placeholder="Insira aqui seu e-mail">
 				</div>
 				
 				<div class="form-group">
@@ -56,9 +65,7 @@ $u = new Usuario;
 				
 				<div class="form-group"> <input type="submit" class="btn btn-primary btn-block" value="Entrar" /> </div>
                 <button class="btn btn-primary btn-block"><a style="text-decoration:none; color: white" href="cadastro.php">Cadastrar-me</a></button>
-			</form>
-
-            <?php
+                <?php
 
                 if(isset($_POST['email']))
                 {
@@ -98,6 +105,7 @@ $u = new Usuario;
                     }
                 }
                 ?>
+            </form>
 		</section>
 	</div>
 </div>
