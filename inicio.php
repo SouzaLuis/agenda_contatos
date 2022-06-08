@@ -91,7 +91,8 @@
 
             //verificar se está vazio
             if(!empty($nome) && !empty($telefone) && !empty($id_usuario))
-            {
+            {   
+                // insira seus dados pessoais para conectar ao banco de dados
                 $u->conectar("vexpenses","localhost","root","");
                 if($u->msgErro == ""){
                     if(!empty($id_usuario)){
@@ -142,6 +143,7 @@
             </thead>
             <tbody>
                 <?php
+                    // insira seus dados pessoais para conectar ao banco de dados
                     $conexao = mysqli_connect('localhost', 'root', '','vexpenses');
                     $query = 'SELECT * FROM agenda WHERE id_usuario = '.$id_usuario.' ORDER BY id ASC';
                     $result = mysqli_query($conexao, $query);

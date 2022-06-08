@@ -1,2 +1,0 @@
-Cadastrar inicialmente um endereço e um telefone
-Com o primeiro endereço e o primeiro telefone já cadastrado, quando clicar em vizualizar mais, possibilidade de inserir mais endereços e telefones

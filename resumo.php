@@ -57,6 +57,7 @@
             <form method="POST">
                 <div class="row">
                     <?php
+                    // insira seus dados pessoais para conectar ao banco de dados
                     $conexao = mysqli_connect('localhost', 'root', '','vexpenses');
                     $id_contato = $_GET['id'];
                     $query = 'SELECT * FROM agenda p WHERE p.id = '.$id_contato.' ORDER BY id ASC';
@@ -105,13 +106,14 @@
 
                     //verificar se está vazio
                     if(!empty($nome) && !empty($rua) && !empty($numero) && !empty($bairro && !empty($cidade) && !empty($uf) && !empty($id_contato) && !empty($id_usuario))){
+                        // insira seus dados pessoais para conectar ao banco de dados
                         $u->conectar("vexpenses","localhost","root","");
                         if($u->msgErro == ""){
                             if($u->editar($nome,$rua,$numero,$bairro,$cidade,$uf,$id_contato,$id_usuario))
                             {
                                  ?>
                                 <div id="msg-sucesso">
-                                Editado com sucesso!
+                                Salvo com sucesso!
                                 </div>
                             <?php
                             }            
@@ -131,7 +133,7 @@
                     }                
                 }
                 ?>
-            <!-- Endereços secundários -->
+            <!-- Exibir Lista de Endereços secundários -->
             <h4 class="text-left" style="margin-top:15px">Endereços Secundários:</h4>
             <table class="table">
                 <thead style="background-color:#2675ff; color: #FFFFFF">
@@ -184,7 +186,7 @@
                 }
                 ?>
             </table>
-            <!-- Deletar números secundários -->
+            <!-- Exibir lista de números secundários -->
             <h4 class="text-left" style="margin-top:15px">Números Secundários:</h4>
             <table class="table">
                 <thead style="background-color:#2675ff; color: #FFFFFF">

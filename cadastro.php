@@ -60,6 +60,8 @@ $u = new Usuario;
         <div class="row justify-content-center mt-5">
             <section class="col-12 colsm-6 col-md-4">
                 <form method="POST" class="form-container">
+                    <div class="text-center"><img  src="imagens/vexpenses.png" alt="" style="width: 120px"></div>
+                    <h2 class="text-center mt-4">Cadastre-se</h2>
                     <div class="form-group"> <input type="text" class="form-control" name="nome" placeholder="Nome Completo " maxlength="80"> </div>
                     <div class="form-group"> <input type="text" class="form-control" maxlength="10" id="cep" name="cep" placeholder="00000-000"> </div>
                     <div class="form-group"> <input type="text" class="form-control" id="logradouro" name="logradouro" maxlength="50" placeholder="Rua"> </div>
@@ -92,6 +94,7 @@ $u = new Usuario;
                             //verificar se está vazio
                             if(!empty($nome) && !empty($cep)  &&!empty($logradouro) && !empty($numero) && !empty($bairro) && !empty($cidade) && !empty($uf) && !empty($telefone) && !empty($email) && !empty($senha) && !empty($confirmarSenha))
                             {
+                                // insira seus dados pessoais para conectar ao banco de dados
                                 $u->conectar("vexpenses","localhost","root","");
                                 if($u->msgErro == ""){
                                     if($senha == $confirmarSenha){

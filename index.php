@@ -51,10 +51,12 @@ $u = new Usuario;
 	<div class="row justify-content-center mt-5">
 		<section class="col-12 colsm-6 col-md-4">
 			<form method="POST" class="form-container">
-				<h2 class="text-center mt-4">Login</h2>
-
+				<div class="text-center"><img  src="imagens/vexpenses.png" alt="" style="width: 120px"></div>
+                <h2 class="text-center mt-4">Login</h2>
+                <br>
 				<div class="form-group">
-					<input type="email"  class="form-control" name="email" placeholder="Insira aqui seu e-mail">
+                    <label for="">Email:</label>
+                    <input type="email"  class="form-control" name="email" placeholder="Insira aqui seu e-mail">
 				</div>
 				
 				<div class="form-group">
@@ -73,6 +75,7 @@ $u = new Usuario;
                     $senha = addslashes($_POST['senha']);
                     if(!empty($email) && !empty($senha))
                     {
+                        // insira seus dados pessoais para conectar ao banco de dados
                         $u->conectar("vexpenses","localhost","root","");
                         if($u->msgErro == ""){
                         if($u->logar($email,$senha)){
