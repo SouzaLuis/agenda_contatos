@@ -6,10 +6,10 @@ Neste pequeno projeto o objetivo foi criar uma agenda de contatos que possibilit
 # Ferramentas Utilizadas
 
 Foram utilizadas as seguintes ferramentas:
->PHP
->HTML
->CSS
->MYSQL
+>PHP - 
+>HTML - 
+>CSS - 
+>MYSQL - 
 >JAVASCRIPT
 
 ## *Desenvolvedor:* Luís Fernando Alves de Souza
