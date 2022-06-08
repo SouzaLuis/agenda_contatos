@@ -25,6 +25,15 @@
             border-color: #FFFFFF;
             color: #2675ff;
         }
+        div#msg-sucesso{
+        width: 400px;
+        margin: 10px auto;
+        padding: 10px;
+        background-color: rgba(50,205,50,.3);
+        border: 1px solid rgb(34,139,34);
+        border-radius: 13px;
+        color: #000;
+        }
         
     </style>
 </head>
@@ -36,7 +45,7 @@
             <button class="btn btn-outline-primary btn-lg" style="background:#FFFFFF; margin-right: 10px; width:200px"><a style="text-decoration:none; color: #2675ff" href="sair.php">Sair</a></button>
         </nav>
     </header>
-
+        <!-- Modal para adicionar contatos -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -62,53 +71,120 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <div class="form-group"> <input type="submit" class="btn btn-primary" value="Salvar" /></div>
                     </div>
-                    <?php
-                        //verificar se clicou no botão
-                        if(isset($_POST['nome']))
-                        {
-                            $nome = addslashes($_POST['nome']);
-                            $cep = addslashes($_POST['cep']);
-                            $logradouro = addslashes($_POST['logradouro']);
-                            $numero = addslashes($_POST['numero']);
-                            $bairro = addslashes($_POST['bairro']);
-                            $cidade = addslashes($_POST['cidade']);
-                            $uf = addslashes($_POST['uf']);
-                            $telefone = addslashes($_POST['telefone']);
-                            $id_usuario = addslashes($_POST['id_usuario']);
-
-
-                            //verificar se está vazio
-                            if(!empty($nome) && !empty($telefone) && !empty($id_usuario))
-                            {
-                                $u->conectar("vexpenses","localhost","root","");
-                                if($u->msgErro == ""){                            
-                                    if($u->cadastrar($nome,$cep,$logradouro,$numero,$bairro,$cidade,$uf,$telefone,$id_usuario))
-                                    {
-                                        ?>
-                                        <div id="msg-sucesso">
-                                        Cadastrado com sucesso! Acesse para acessar todas as funcionalidades
-                                        </div>
-                                    <?php
-                                    }       
-                                }else{
-                                    ?>
-                                        <div class="msg-erro">
-                                        <?php echo "Erro:".$u.msgErro; ?>
-                                        </div>
-                                        <?php
-                                }
-                            }else{
-                                ?>
-                                <div class="msg-erro">
-                                Preencha todos os campos obrigatórios!
-                                </div>
-                                <?php
-                            }
-                        }
-                    ?>
                 </form>
             </div>
         </div>
+    </div>
+    <?php
+        //verificar se clicou no botão
+        if(isset($_POST['nome']))
+        {
+            $nome = addslashes($_POST['nome']);
+            $cep = addslashes($_POST['cep']);
+            $logradouro = addslashes($_POST['logradouro']);
+            $numero = addslashes($_POST['numero']);
+            $bairro = addslashes($_POST['bairro']);
+            $cidade = addslashes($_POST['cidade']);
+            $uf = addslashes($_POST['uf']);
+            $telefone = addslashes($_POST['telefone']);
+            $id_usuario = addslashes($_POST['id_usuario']);
+
+            //verificar se está vazio
+            if(!empty($nome) && !empty($telefone) && !empty($id_usuario))
+            {
+                $u->conectar("vexpenses","localhost","root","");
+                if($u->msgErro == ""){
+                    if(!empty($id_usuario)){
+                        if($u->cadastrar($nome,$cep,$logradouro,$numero,$bairro,$cidade,$uf,$telefone,$id_usuario))
+                        {
+                            ?>
+                            <div id="msg-sucesso">
+                            Cadastrado com sucesso!
+                            </div>
+                            <?php
+                        }
+                    } else{
+                        ?>
+                        <div class="msg-erro">
+                        Sua sessão expirou!
+                        </div>
+                        <?php
+                    }            
+                }else{
+                    ?>
+                    <div class="msg-erro">
+                    <?php echo "Erro:".$u.msgErro; ?>
+                    </div>
+                    <?php
+                }
+            }else{
+                ?>
+                <div class="msg-erro">
+                Preencha todos os campos obrigatórios!
+                </div>
+                <?php
+            }
+        }
+
+    ?>
+    <!-- Exibir lista de contatos -->
+    <div class="table-responsive text-center">
+        <table class="table"> 
+            <thead style="background-color:#2675ff; color: #FFFFFF">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">UF</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $conexao = mysqli_connect('localhost', 'root', '','vexpenses');
+                    $query = 'SELECT * FROM agenda WHERE id_usuario = '.$id_usuario.' ORDER BY id ASC';
+                    $result = mysqli_query($conexao, $query);
+                    
+                    if($result):
+                        if(mysqli_num_rows($result)>0):
+                            echo "<div class='row'>";
+                            while($contatos = mysqli_fetch_assoc($result)):
+                            ?>   
+                            <tr style="align-itemns:center">
+                                <td><?php echo $contatos['nome'];?></td>
+                                <td><?php echo $contatos['telefone'];?></td>
+                                <td><?php echo $contatos['cidade'];?></td>
+                                <td><?php echo $contatos['uf'];?></td>
+                                <form method="POST" action="resumo.php?id=<?php echo $contatos['id'];?>">
+                                    <td><input type="submit" style="background:#FFFFFF; width:100px; color: #2675ff" class="btn btn-primary" value="Visualizar"></td>
+                                </form>
+                                <form method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $contatos['id']; ?>">
+                                    <input type="hidden" name="id_usuario" value="<?php echo $contatos['id_usuario']; ?>">
+                                    <td><input type="submit" style="background:#FFFFFF; width:100px; color: #2675ff" class="btn btn-primary" value="Apagar"></td>
+                                </form>
+                            </tr>
+                            <?php
+                            endwhile;
+                        endif;
+                    endif;
+                    //verificar se clicou no botão
+                    if(isset($_POST['id']))
+                    {
+                        $id = addslashes($_POST['id']);
+                        $id_usuario = addslashes($_POST['id_usuario']);
+
+                        $u->conectar("vexpenses","localhost","root","");
+                        if($u->msgErro == ""){
+                            if($u->deletar($id,$id_usuario))
+                            {
+                            }            
+                        }
+                    }    
+                ?>
+            </tbody>
+        </table>
     </div>
 
     <script src="src/endereco/Cadastro_Endereco.js"></script>
